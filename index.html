@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Water Quality Compliance Suite</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #F0F4F8;
+      --surface:   #FFFFFF;
+      --border:    #DDE3EC;
+      --primary:   #1A6FB5;
+      --primary-d: #145A97;
+      --pass:      #16A34A;
+      --fail:      #DC2626;
+      --warn:      #D97706;
+      --info:      #2563EB;
+      --text:      #1E293B;
+      --muted:     #64748B;
+      --radius:    10px;
+      --shadow:    0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ───────────────────────────────────────────────── */
+    header {
+      background: #0F2942;
+      color: #fff;
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    header h1 { font-size: 1.15rem; font-weight: 700; display:flex; align-items:center; gap:8px; }
+    header .logo-emoji { display:inline-block; width:1.2rem; text-align:center; font-size:1.15rem; line-height:1; }
+    header .title-text { display:inline-block; }
+    header h1 span { color: #60A5FA; }
+    header .title-group { display: flex; flex-direction: column; gap: 4px; }
+    header .subtitle {
+      font-size: 0.78rem;
+      color: #CFE8FF;
+      font-weight: 600;
+      opacity: 0.95;
+      line-height: 1;
+      /* Start the subtitle under the main title text (not the emoji) */
+      margin-left: 1.2rem;
+    }
+    #db-version {
+      font-size: 0.7rem;
+      color: #94A3B8;
+      background: rgba(255,255,255,0.07);
+      padding: 4px 10px;
+      border-radius: 99px;
+    }
+
+    /* ── Layout ───────────────────────────────────────────────── */
+    main {
+      max-width: 980px;
+      margin: 26px auto;
+      padding: 0 16px 60px;
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    @media (max-width: 740px) { main { grid-template-columns: 1fr; } }
+
+    /* ── Cards ────────────────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .card-header {
+      background: #F8FAFC;
+      border-bottom: 1px solid var(--border);
+      padding: 11px 16px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-body { padding: 16px; }
+
+    /* ── Form ─────────────────────────────────────────────────── */
+    .form-group { margin-bottom: 12px; }
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .label-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 5px;
+    }
+    select, input[type="number"], input[type="text"] {
+      width: 100%;
+      padding: 9px 11px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      font-size: 0.9rem;
+      color: var(--text);
+      background: #fff;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    select:focus, input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(26,111,181,0.12);
+    }
+    .unit-badge {
+      font-size: 0.72rem;
+      background: #EFF6FF;
+      color: var(--primary);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* ── Batch List ───────────────────────────────────────────── */
+    #batch-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    /* Normal (view) state */
+    .batch-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.15s;
+    }
+    .batch-item:hover { border-color: #BFDBFE; }
+    .batch-item.is-editing { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,111,181,0.12); }
+
+    .batch-view {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      background: #F8FAFC;
+      cursor: default;
+    }
+    .batch-view .bv-name {
+      flex: 1;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .batch-view .bv-val {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-right: 2px;
+    }
+    .batch-view .bv-unit {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-right: 6px;
+    }
+    .btn-icon {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 3px 5px;
+      border-radius: 5px;
+      font-size: 0.85rem;
+      color: #94A3B8;
+      transition: color 0.15s, background 0.15s;
+      line-height: 1;
+    }
+    .btn-icon:hover { background: #F1F5F9; }
+    .btn-icon.edit:hover  { color: var(--primary); }
+    .btn-icon.del:hover   { color: var(--fail); }
+
+    /* Edit state */
+    .batch-edit {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 10px;
+      background: #EFF6FF;
+    }
+    .batch-item.is-editing .batch-view { display: none; }
+    .batch-item.is-editing .batch-edit { display: flex; }
+
+    .batch-edit .edit-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--primary);
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .batch-edit input[type="number"] {
+      width: 110px;
+      padding: 5px 8px;
+      font-size: 0.88rem;
+    }
+    .btn-save {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn-save:hover { background: var(--primary-d); }
+    .btn-cancel {
+      background: #E2E8F0;
+      color: var(--text);
+      border: none;
+      border-radius: 5px;
+      padding: 5px 8px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .btn-cancel:hover { background: #CBD5E1; }
+
+    .empty-state {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+      padding: 22px 0;
+      line-height: 1.6;
+    }
+
+    /* ── Buttons ──────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, opacity 0.15s;
+      width: 100%;
+    }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .btn-primary   { background: var(--primary); color: #fff; }
+    .btn-primary:hover:not(:disabled)   { background: var(--primary-d); }
+    .btn-add       { background: #EFF6FF; color: var(--primary); border: 1px solid #BFDBFE; margin-bottom: 12px; }
+    .btn-add:hover:not(:disabled)       { background: #DBEAFE; }
+    .btn-pdf       { background: #064E3B; color: #fff; margin-top: 8px; display: none; }
+    .btn-pdf:hover:not(:disabled)       { background: #065F46; }
+    .btn-pdf.visible { display: inline-flex; }
+    .btn-danger    { background: #FEF2F2; color: #991B1B; margin-top: 8px; }
+    .btn-danger:hover:not(:disabled)    { background: #FEE2E2; }
+
+    /* ── Banners ──────────────────────────────────────────────── */
+    .banner {
+      border-radius: 7px;
+      padding: 10px 14px;
+      font-size: 0.83rem;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .banner-error   { background: #FEF2F2; border: 1px solid #FECACA; color: #991B1B; }
+    .banner-warning { background: #FFFBEB; border: 1px solid #FDE68A; color: #92400E; }
+    .banner ul { padding-left: 16px; margin-top: 4px; }
+
+    /* ── Results ──────────────────────────────────────────────── */
+    #results-area { display: flex; flex-direction: column; gap: 12px; }
+
+    .placeholder {
+      text-align: center;
+      padding: 56px 20px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+    .placeholder .icon { font-size: 2.4rem; margin-bottom: 12px; }
+
+    #summary-bar { display: flex; gap: 10px; flex-wrap: wrap; }
+    .summary-chip {
+      flex: 1;
+      min-width: 90px;
+      text-align: center;
+      padding: 14px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .summary-chip .num { font-size: 1.75rem; font-weight: 800; line-height: 1; }
+    .summary-chip .lbl { font-size: 0.7rem; color: var(--muted); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .chip-pass .num { color: var(--pass); }
+    .chip-fail .num { color: var(--fail); }
+
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .result-card.has-fail { border-left: 4px solid var(--fail); }
+    .result-card.all-pass { border-left: 4px solid var(--pass); }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .result-header:hover { background: #FAFAFA; }
+    .result-param { font-weight: 700; font-size: 0.93rem; flex: 1; }
+    .result-value { font-size: 0.85rem; color: var(--muted); white-space: nowrap; }
+
+    .status-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 99px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .badge-pass { background: #DCFCE7; color: #166534; }
+    .badge-fail { background: #FEE2E2; color: #991B1B; }
+
+    .chevron { color: #CBD5E1; font-size: 0.72rem; flex-shrink: 0; transition: transform 0.2s; }
+    .chevron.open { transform: rotate(180deg); }
+
+    .result-details { display: none; border-top: 1px solid var(--border); }
+    .result-details.open { display: block; }
+
+    .std-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 11px 16px;
+      border-bottom: 1px solid #F1F5F9;
+      font-size: 0.83rem;
+    }
+    .std-row:last-child { border-bottom: none; }
+    .std-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+    .dot-pass { background: var(--pass); }
+    .dot-fail { background: var(--fail); }
+    .dot-info { background: var(--info); }
+
+    .std-body { flex: 1; }
+    .std-authority { font-weight: 700; }
+    .std-limit { color: var(--muted); font-size: 0.76rem; margin-top: 1px; }
+
+    .std-alert {
+      margin-top: 6px;
+      background: #FEF2F2;
+      border-left: 3px solid var(--fail);
+      border-radius: 0 6px 6px 0;
+      padding: 8px 10px;
+      color: #7F1D1D;
+      line-height: 1.5;
+    }
+    .std-alert strong { display: block; margin-bottom: 2px; font-size: 0.82rem; }
+    .std-solution {
+      margin-top: 4px;
+      background: #ECFDF5;
+      border-left: 3px solid var(--pass);
+      border-radius: 0 6px 6px 0;
+      padding: 6px 10px;
+      color: #065F46;
+      font-size: 0.81rem;
+    }
+
+    /* ── Spinner ──────────────────────────────────────────────── */
+    .spinner {
+      display: inline-block;
+      width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="title-group">
+    <h1><span class="logo-emoji">💧</span><span class="title-text">Water Quality <span>Compliance Suite</span></span></h1>
+    <div class="subtitle">According to WHO and NIS Guidelines</div>
+  </div>
+  <span id="db-version">Loading standards…</span>
+</header>
+
+<main>
+
+  <!-- ── LEFT: Input Panel ──────────────────────────────────── -->
+  <div>
+    <div class="card">
+      <div class="card-header">📋 Add Test Result</div>
+      <div class="card-body">
+
+        <div class="form-group">
+          <div class="label-row">
+            <label for="param-select" style="margin:0">Parameter</label>
+            <span class="unit-badge" id="unit-display">—</span>
+          </div>
+          <select id="param-select">
+            <option value="">— Select a parameter —</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="value-input">Lab Result Value</label>
+          <input type="number" id="value-input" step="any" placeholder="Enter numeric value" />
+        </div>
+
+        <button class="btn btn-add" id="btn-add">＋ Add to Batch</button>
+
+        <div class="card-header" style="margin: 0 -16px 10px; padding-left: 16px; border-top: 1px solid var(--border);">
+          Batch Queue
+          <span id="batch-count" style="color:var(--primary); font-size:0.8rem; font-weight:700; text-transform:none; letter-spacing:0;">0 items</span>
+        </div>
+
+        <div id="batch-list">
+          <div class="empty-state">No parameters added yet.<br/>Select one above and click Add.</div>
+        </div>
+
+        <div id="input-errors"></div>
+
+        <button class="btn btn-primary" id="btn-analyze" disabled>
+          🔍 Run Analysis
+        </button>
+
+        <!-- Hidden until analysis has been run at least once -->
+        <button class="btn btn-pdf" id="btn-report" disabled>
+          📄 Download PDF Report
+        </button>
+
+        <button class="btn btn-danger" id="btn-clear">
+          🗑 Clear All
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RIGHT: Results Panel ──────────────────────────────── -->
+  <div id="results-area">
+    <div class="card">
+      <div class="card-body">
+        <div class="placeholder">
+          <div class="icon">🧪</div>
+          Add test results on the left, then click<br/>
+          <strong>Run Analysis</strong> to see compliance results.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  // ── State ────────────────────────────────────────────────────
+  let parameters    = [];   // [{name, unit}]
+  let batch         = [];   // [{name, value, unit}]
+  let analysisRan   = false;
+
+  // ── DOM refs ─────────────────────────────────────────────────
+  const paramSelect  = document.getElementById('param-select');
+  const valueInput   = document.getElementById('value-input');
+  const unitDisplay  = document.getElementById('unit-display');
+  const batchList    = document.getElementById('batch-list');
+  const batchCount   = document.getElementById('batch-count');
+  const inputErrors  = document.getElementById('input-errors');
+  const btnAdd       = document.getElementById('btn-add');
+  const btnAnalyze   = document.getElementById('btn-analyze');
+  const btnReport    = document.getElementById('btn-report');
+  const btnClear     = document.getElementById('btn-clear');
+  const resultsArea  = document.getElementById('results-area');
+  const dbVersion    = document.getElementById('db-version');
+
+  // ── Load parameters on boot ───────────────────────────────────
+  async function loadParameters() {
+    try {
+      const res  = await fetch('/api/parameters');
+      const data = await res.json();
+      parameters = data.parameters;
+      dbVersion.textContent = data.db_version;
+      parameters.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.name;
+        opt.textContent = p.name;
+        paramSelect.appendChild(opt);
+      });
+    } catch {
+      dbVersion.textContent = 'Could not load standards — is Flask running?';
+    }
+  }
+
+  // ── Unit badge update ─────────────────────────────────────────
+  paramSelect.addEventListener('change', () => {
+    const p = parameters.find(p => p.name === paramSelect.value);
+    unitDisplay.textContent = p ? p.unit : '—';
+    clearInputErrors();
+  });
+
+  // ── Add to batch ──────────────────────────────────────────────
+  btnAdd.addEventListener('click', addToBatch);
+  valueInput.addEventListener('keydown', e => { if (e.key === 'Enter') addToBatch(); });
+
+  function addToBatch() {
+    clearInputErrors();
+    const name = paramSelect.value;
+    const raw  = valueInput.value.trim();
+
+    if (!name) { showInputError('Please select a parameter.'); return; }
+    if (raw === '' || isNaN(parseFloat(raw))) { showInputError('Please enter a valid numeric value.'); return; }
+    if (batch.some(b => b.name === name)) {
+      showInputError(`"${name}" is already in the batch. Use the ✏️ edit button to change its value.`);
+      return;
+    }
+
+    const param = parameters.find(p => p.name === name);
+    batch.push({ name, value: parseFloat(raw), unit: param.unit });
+
+    // Reset form
+    paramSelect.value       = '';
+    valueInput.value        = '';
+    unitDisplay.textContent = '—';
+
+    renderBatch();
+    // Adding a new item invalidates the last analysis — hide PDF button
+    hidePdfButton();
+  }
+
+  // ── Render batch list ─────────────────────────────────────────
+  function renderBatch() {
+    batchCount.textContent = `${batch.length} item${batch.length !== 1 ? 's' : ''}`;
+    btnAnalyze.disabled    = batch.length === 0;
+
+    if (batch.length === 0) {
+      batchList.innerHTML = '<div class="empty-state">No parameters added yet.<br/>Select one above and click Add.</div>';
+      hidePdfButton();
+      return;
+    }
+
+    batchList.innerHTML = batch.map((item, i) => `
+      <div class="batch-item" id="batch-item-${i}">
+
+        <!-- View mode -->
+        <div class="batch-view">
+          <span class="bv-name" title="${item.name}">${item.name}</span>
+          <span class="bv-val">${item.value}</span>
+          <span class="bv-unit">${item.unit}</span>
+          <button class="btn-icon edit" title="Edit value" onclick="startEdit(${i})">✏️</button>
+          <button class="btn-icon del"  title="Remove"     onclick="removeItem(${i})">✕</button>
+        </div>
+
+        <!-- Edit mode (hidden by default) -->
+        <div class="batch-edit">
+          <span class="edit-name" title="${item.name}">${item.name}</span>
+          <input type="number" step="any" id="edit-input-${i}" value="${item.value}" />
+          <button class="btn-save"   onclick="saveEdit(${i})">Save</button>
+          <button class="btn-cancel" onclick="cancelEdit(${i})">✕</button>
+        </div>
+
+      </div>
+    `).join('');
+
+    // Allow Enter key to save edit
+    batch.forEach((_, i) => {
+      const inp = document.getElementById(`edit-input-${i}`);
+      if (inp) inp.addEventListener('keydown', e => {
+        if (e.key === 'Enter')  saveEdit(i);
+        if (e.key === 'Escape') cancelEdit(i);
+      });
+    });
+  }
+
+  // ── Edit helpers ──────────────────────────────────────────────
+  function startEdit(i) {
+    // Close any other open edits first
+    document.querySelectorAll('.batch-item.is-editing').forEach(el => {
+      const idx = parseInt(el.id.replace('batch-item-', ''));
+      cancelEdit(idx);
+    });
+    const el = document.getElementById(`batch-item-${i}`);
+    el.classList.add('is-editing');
+    document.getElementById(`edit-input-${i}`).focus();
+    // Editing invalidates the last analysis result — hide PDF
+    hidePdfButton();
+  }
+
+  function saveEdit(i) {
+    const inp = document.getElementById(`edit-input-${i}`);
+    const raw = inp.value.trim();
+    if (raw === '' || isNaN(parseFloat(raw))) {
+      inp.style.borderColor = 'var(--fail)';
+      inp.focus();
+      return;
+    }
+    batch[i].value = parseFloat(raw);
+    renderBatch();
+    hidePdfButton();
+  }
+
+  function cancelEdit(i) {
+    const el = document.getElementById(`batch-item-${i}`);
+    if (el) el.classList.remove('is-editing');
+  }
+
+  function removeItem(i) {
+    batch.splice(i, 1);
+    renderBatch();
+    hidePdfButton();
+  }
+
+  // ── PDF button visibility ─────────────────────────────────────
+  function showPdfButton() {
+    btnReport.classList.add('visible');
+    btnReport.disabled = false;
+  }
+  function hidePdfButton() {
+    btnReport.classList.remove('visible');
+    btnReport.disabled = true;
+  }
+
+  // ── Clear all ─────────────────────────────────────────────────
+  btnClear.addEventListener('click', () => {
+    batch = [];
+    analysisRan = false;
+    renderBatch();
+    clearInputErrors();
+    resultsArea.innerHTML = `
+      <div class="card"><div class="card-body">
+        <div class="placeholder">
+          <div class="icon">🧪</div>
+          Add test results on the left, then click<br/><strong>Run Analysis</strong>.
+        </div>
+      </div></div>`;
+  });
+
+  // ── Run Analysis ──────────────────────────────────────────────
+  btnAnalyze.addEventListener('click', async () => {
+    clearInputErrors();
+    btnAnalyze.disabled  = true;
+    btnAnalyze.innerHTML = '<span class="spinner"></span> Analysing…';
+
+    try {
+      const res  = await fetch('/api/analyze', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ batch: batch.map(b => ({ name: b.name, value: b.value })) }),
+      });
+      const data = await res.json();
+
+      if (res.status === 422 && data.validation_errors) {
+        showInputError(null, data.validation_errors);
+      } else if (!res.ok) {
+        showInputError(data.error || 'Server error. Please try again.');
+      } else {
+        renderResults(data.results, data.warnings);
+        analysisRan = true;
+        showPdfButton();   // ← Only show PDF button after successful analysis
+      }
+    } catch {
+      showInputError('Could not reach the server. Is Flask running on port 5000?');
+    } finally {
+      btnAnalyze.disabled  = false;
+      btnAnalyze.innerHTML = '🔍 Run Analysis';
+    }
+  });
+
+  // ── Download PDF ──────────────────────────────────────────────
+  btnReport.addEventListener('click', async () => {
+    btnReport.disabled  = true;
+    btnReport.innerHTML = '<span class="spinner" style="border-top-color:#fff"></span> Generating PDF…';
+
+    try {
+      const res = await fetch('/api/report', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ batch: batch.map(b => ({ name: b.name, value: b.value })) }),
+      });
+
+      if (!res.ok) {
+        // Try to parse a JSON error from the server
+        let msg = 'PDF generation failed on the server.';
+        try { const d = await res.json(); msg = d.error || msg; } catch {}
+        showInputError(msg);
+        return;
+      }
+
+      // Trigger download
+      const blob     = await res.blob();
+      const url      = URL.createObjectURL(blob);
+      const a        = document.createElement('a');
+      const cd       = res.headers.get('Content-Disposition') || '';
+      const filename = cd.match(/filename="?([^"]+)"?/)?.[1] || 'Water_Quality_Report.pdf';
+      a.href     = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+    } catch {
+      showInputError('Could not reach the server. Is Flask running on port 5000?');
+    } finally {
+      btnReport.disabled  = false;
+      btnReport.innerHTML = '📄 Download PDF Report';
+    }
+  });
+
+  // ── Render analysis results ───────────────────────────────────
+  function renderResults(results, warnings) {
+    const total  = results.length;
+    const fails  = results.filter(r => r.status === 'FAIL').length;
+    const passes = total - fails;
+
+    let html = `
+      <div id="summary-bar">
+        <div class="summary-chip">
+          <div class="num">${total}</div>
+          <div class="lbl">Parameters</div>
+        </div>
+        <div class="summary-chip chip-pass">
+          <div class="num">${passes}</div>
+          <div class="lbl">Passed</div>
+        </div>
+        <div class="summary-chip chip-fail">
+          <div class="num">${fails}</div>
+          <div class="lbl">Flagged</div>
+        </div>
+      </div>`;
+
+    if (warnings && warnings.length) {
+      html += `<div class="banner banner-warning">
+        <strong>⚠ Notices</strong>
+        <ul>${warnings.map(w => `<li>${w}</li>`).join('')}</ul>
+      </div>`;
+    }
+
+    // Failed cards first
+    const sorted = [...results].sort((a, b) => (a.status === 'FAIL' ? -1 : 1));
+
+    sorted.forEach(res => {
+      const cardClass = res.status === 'FAIL' ? 'has-fail' : 'all-pass';
+      const badge     = res.status === 'FAIL'
+        ? '<span class="status-badge badge-fail">⚠ Flagged</span>'
+        : '<span class="status-badge badge-pass">✓ Passed</span>';
+
+      let details = '';
+      res.standards.forEach(std => {
+        const dotClass = std.status === 'FAIL' ? 'dot-fail' : std.status === 'INFO' ? 'dot-info' : 'dot-pass';
+        let alert = '';
+        if (std.status === 'FAIL') {
+          alert = `
+            <div class="std-alert">
+              <strong>⚠ ${std.consequence}</strong>
+              Violation: ${std.violation} &nbsp;(Limit: ${std.limit})
+            </div>
+            <div class="std-solution">🔧 <strong>Solution:</strong> ${std.solution}</div>`;
+        }
+        details += `
+          <div class="std-row">
+            <div class="std-dot ${dotClass}"></div>
+            <div class="std-body">
+              <div class="std-authority">${std.authority}</div>
+              <div class="std-limit">Limit: ${std.limit}</div>
+              ${alert}
+            </div>
+          </div>`;
+      });
+
+      html += `
+        <div class="result-card ${cardClass}">
+          <div class="result-header" onclick="toggleCard(this)">
+            <span class="result-param">${res.parameter}</span>
+            <span class="result-value">${res.value} ${res.unit}</span>
+            ${badge}
+            <span class="chevron">▼</span>
+          </div>
+          <div class="result-details">${details}</div>
+        </div>`;
+    });
+
+    resultsArea.innerHTML = html;
+
+    // Auto-expand failed cards
+    resultsArea.querySelectorAll('.result-card.has-fail').forEach(card => {
+      card.querySelector('.result-details').classList.add('open');
+      card.querySelector('.chevron').classList.add('open');
+    });
+  }
+
+  function toggleCard(header) {
+    header.nextElementSibling.classList.toggle('open');
+    header.querySelector('.chevron').classList.toggle('open');
+  }
+
+  // ── Error helpers ─────────────────────────────────────────────
+  function showInputError(message, list) {
+    if (list && list.length) {
+      inputErrors.innerHTML = `
+        <div class="banner banner-error">
+          <strong>Please fix the following:</strong>
+          <ul>${list.map(e => `<li>${e}</li>`).join('')}</ul>
+        </div>`;
+    } else {
+      inputErrors.innerHTML = `<div class="banner banner-error">${message}</div>`;
+    }
+  }
+  function clearInputErrors() { inputErrors.innerHTML = ''; }
+
+  // ── Init ──────────────────────────────────────────────────────
+  loadParameters();
+</script>
+
+</body>
+</html>
