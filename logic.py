@@ -59,11 +59,14 @@ def get_db_version():
         with open(DB_FILE, 'r', encoding='utf-8') as f:
             payload = json.load(f)
         meta = payload.get("_metadata", {})
-        version     = meta.get("db_version", "unknown")
-        last_update = meta.get("last_updated", "unknown")
-        return f"v{version} (updated {last_update})"
+        version     = meta.get("db_version")
+        last_update = meta.get("last_updated")
+        # Only return version info if both fields exist
+        if version and last_update:
+            return f"v{version} (updated {last_update})"
+        return ""
     except Exception:
-        return "version unknown"
+        return ""
 
 
 def get_parameter_names():

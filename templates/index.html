@@ -527,7 +527,11 @@
       const res  = await fetch('/api/parameters');
       const data = await res.json();
       parameters = data.parameters;
-      dbVersion.textContent = data.db_version;
+      if (data.db_version) {
+        dbVersion.textContent = data.db_version;
+      } else {
+        dbVersion.style.display = 'none';
+      }
       parameters.forEach(p => {
         const opt = document.createElement('option');
         opt.value = p.name;
