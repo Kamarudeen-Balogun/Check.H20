@@ -498,6 +498,14 @@
   let parameters    = [];   // [{name, unit}]
   let batch         = [];   // [{name, value, unit}]
   let analysisRan   = false;
+  let lastResults   = [];   // Store last analysis results
+  let lastWarnings  = [];   // Store last warnings
+
+  // ── Local Storage Keys ───────────────────────────────────────
+  const STORAGE_BATCH    = 'wq_batch';
+  const STORAGE_RESULTS  = 'wq_results';
+  const STORAGE_WARNINGS = 'wq_warnings';
+  const STORAGE_RAN      = 'wq_analysisRan';
 
   // ── DOM refs ─────────────────────────────────────────────────
   const paramSelect  = document.getElementById('param-select');
@@ -526,8 +534,66 @@
         opt.textContent = p.name;
         paramSelect.appendChild(opt);
       });
+      // After parameters load, restore batch and results from localStorage
+      restoreFromStorage();
     } catch {
       dbVersion.textContent = 'Could not load standards — is Flask running?';
+    }
+  }
+
+  // ── Local Storage Functions ───────────────────────────────────
+  function saveBatch() {
+    try {
+      localStorage.setItem(STORAGE_BATCH, JSON.stringify(batch));
+    } catch (e) {
+      console.error('Failed to save batch to localStorage:', e);
+    }
+  }
+
+  function saveResults() {
+    try {
+      localStorage.setItem(STORAGE_RESULTS, JSON.stringify(lastResults));
+      localStorage.setItem(STORAGE_WARNINGS, JSON.stringify(lastWarnings));
+      localStorage.setItem(STORAGE_RAN, JSON.stringify(analysisRan));
+    } catch (e) {
+      console.error('Failed to save results to localStorage:', e);
+    }
+  }
+
+  function restoreFromStorage() {
+    try {
+      // Restore batch
+      const savedBatch = localStorage.getItem(STORAGE_BATCH);
+      if (savedBatch) {
+        batch = JSON.parse(savedBatch);
+        renderBatch();
+      }
+
+      // Restore results and analysis state
+      const savedResults = localStorage.getItem(STORAGE_RESULTS);
+      const savedWarnings = localStorage.getItem(STORAGE_WARNINGS);
+      const savedRan = localStorage.getItem(STORAGE_RAN);
+
+      if (savedResults && savedWarnings !== null) {
+        lastResults = JSON.parse(savedResults);
+        lastWarnings = JSON.parse(savedWarnings);
+        analysisRan = JSON.parse(savedRan);
+        renderResults(lastResults, lastWarnings);
+        if (analysisRan) showPdfButton();
+      }
+    } catch (e) {
+      console.error('Failed to restore from localStorage:', e);
+    }
+  }
+
+  function clearStorage() {
+    try {
+      localStorage.removeItem(STORAGE_BATCH);
+      localStorage.removeItem(STORAGE_RESULTS);
+      localStorage.removeItem(STORAGE_WARNINGS);
+      localStorage.removeItem(STORAGE_RAN);
+    } catch (e) {
+      console.error('Failed to clear localStorage:', e);
     }
   }
 
@@ -563,6 +629,7 @@
     unitDisplay.textContent = '—';
 
     renderBatch();
+    saveBatch();
     // Adding a new item invalidates the last analysis — hide PDF button
     hidePdfButton();
   }
@@ -635,6 +702,7 @@
     }
     batch[i].value = parseFloat(raw);
     renderBatch();
+    saveBatch();
     hidePdfButton();
   }
 
@@ -646,6 +714,7 @@
   function removeItem(i) {
     batch.splice(i, 1);
     renderBatch();
+    saveBatch();
     hidePdfButton();
   }
 
@@ -663,8 +732,11 @@
   btnClear.addEventListener('click', () => {
     batch = [];
     analysisRan = false;
+    lastResults = [];
+    lastWarnings = [];
     renderBatch();
     clearInputErrors();
+    clearStorage();
     resultsArea.innerHTML = `
       <div class="card"><div class="card-body">
         <div class="placeholder">
@@ -748,6 +820,10 @@
 
   // ── Render analysis results ───────────────────────────────────
   function renderResults(results, warnings) {
+    lastResults = results;
+    lastWarnings = warnings;
+    saveResults();
+
     const total  = results.length;
     const fails  = results.filter(r => r.status === 'FAIL').length;
     const passes = total - fails;
