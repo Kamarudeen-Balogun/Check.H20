@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Water Quality Compliance Suite</title>
+  <link rel="icon" href="{{ url_for('static', filename='logo.png') }}" type="image/png" />
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='apple-touch-icon.png') }}" />
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon" />
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}" />
+  <meta name="theme-color" content="#0F2942" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -46,7 +51,7 @@
       box-shadow: 0 2px 12px rgba(0,0,0,0.25);
     }
     header h1 { font-size: 1.15rem; font-weight: 700; display:flex; align-items:center; gap:8px; }
-    header .logo-emoji { display:inline-block; width:1.2rem; text-align:center; font-size:1.15rem; line-height:1; }
+    header .logo-image { width: 28px; height: 28px; object-fit: contain; display: inline-block; }
     header .title-text { display:inline-block; }
     header h1 span { color: #60A5FA; }
     header .title-group { display: flex; flex-direction: column; gap: 4px; }
@@ -56,8 +61,8 @@
       font-weight: 600;
       opacity: 0.95;
       line-height: 1;
-      /* Start the subtitle under the main title text (not the emoji) */
-      margin-left: 1.2rem;
+      /* Start the subtitle under the main title text (not the logo) */
+      margin-left: calc(28px + 8px);
     }
     #db-version {
       font-size: 0.7rem;
@@ -419,7 +424,10 @@
 
 <header>
   <div class="title-group">
-    <h1><span class="logo-emoji">💧</span><span class="title-text">Water Quality <span>Compliance Suite</span></span></h1>
+    <h1>
+      <img class="logo-image" src="{{ url_for('static', filename='logo.png') }}" alt="Water Quality logo" />
+      <span class="title-text">Water Quality <span>Compliance Suite</span></span>
+    </h1>
     <div class="subtitle">According to WHO and NIS Guidelines</div>
   </div>
   <span id="db-version">Loading standards…</span>
