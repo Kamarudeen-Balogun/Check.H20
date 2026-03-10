@@ -17,7 +17,10 @@
       }
     ],
     "maintainer": "Review and update this file whenever WHO or SON publishes a new edition.",
-    "note": "physical_min / physical_max are realistic measurement bounds used for input validation only -- not compliance limits. Each standard entry carries a 'standard_date' field showing when that authority issued or last revised the limit."
+    "note": "physical_min / physical_max are realistic measurement bounds used for input validation only -- not compliance limits. Each standard entry carries a 'standard_date' field showing when that authority issued or last revised the limit.",
+    "db_version": "2.0.0",
+    "last_updated": "2026-03-10",
+    "total_parameters": 81
   },
   "parameters": [
 
@@ -143,6 +146,44 @@
     },
 
     {
+      "id": "phys_08", "name": "Taste", "unit": "-",
+      "physical_min": 0.0, "physical_max": 1.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": "Unobjectionable",
+          "consequence": "Consumer complaints; may indicate contamination.",
+          "solution": "Identify source; activated carbon or alternative treatment."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": "Unobjectionable",
+          "consequence": "Unpleasant taste reduces consumer confidence and may indicate contamination.",
+          "solution": "Activated carbon filtration; investigate source."
+        }
+      ]
+    },
+
+    {
+      "id": "phys_09", "name": "Odour", "unit": "-",
+      "physical_min": 0.0, "physical_max": 1.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": "Unobjectionable",
+          "consequence": "Consumer complaints; may indicate contamination.",
+          "solution": "Aeration, activated carbon, or chlorination."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": "Unobjectionable",
+          "consequence": "Unpleasant odour signals possible contamination or excessive organics.",
+          "solution": "Aeration; activated carbon; investigate source."
+        }
+      ]
+    },
+
+    {
       "id": "chem_01", "name": "Sulfate (SO4)", "unit": "mg/L",
       "physical_min": 0.0, "physical_max": 5000.0,
       "standards": [
@@ -187,52 +228,52 @@
         {
             "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.01,
-          "consequence": "CRITICAL: Neurotoxin causing irreversible brain damage, especially in children.",
-          "solution": "Coagulation with alum, RO, replace lead service pipes, pH control."
+          "consequence": "CRITICAL: Neurotoxin causing irreversible brain damage especially in children. Kidney damage, hypertension. No safe level.",
+          "solution": "Replace lead service pipes. Maintain pH > 7.5 to reduce leaching. Coagulation with alum or RO."
         },
         {
           "authority": "WHO Guidelines", "standard_date": "2022-03-21",
           "max_limit": 0.01,
-          "consequence": "CRITICAL: Causes kidney damage, hypertension, developmental impairment. No safe level.",
-          "solution": "Replace lead pipes. Maintain pH > 7.5 to reduce leaching."
+          "consequence": "Severe neurotoxicity, especially in children. Developmental delays, reduced IQ, behavioral problems. Accumulates in bones and soft tissues.",
+          "solution": "pH control (7.5-8.0), orthophosphate corrosion inhibitors, replace lead pipes. RO if source contamination."
         }
       ]
     },
 
     {
       "id": "chem_04", "name": "Nitrate (NO3)", "unit": "mg/L",
-      "physical_min": 0.0, "physical_max": 1000.0,
+      "physical_min": 0.0, "physical_max": 500.0,
       "standards": [
         {
             "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 50,
-          "consequence": "Blue Baby Syndrome (Methemoglobinemia) in infants under 6 months.",
-          "solution": "Ion Exchange or Reverse Osmosis. DO NOT boil - boiling concentrates nitrates."
+          "consequence": "Blue Baby Syndrome (Methemoglobinemia) in infants under 6 months. Indicator of agricultural runoff or sewage.",
+          "solution": "Ion Exchange or Reverse Osmosis. DO NOT boil - boiling concentrates nitrates. Control fertilizer/sewage runoff."
         },
         {
           "authority": "WHO Guidelines", "standard_date": "2022-03-21",
           "max_limit": 50,
-          "consequence": "Indicator of agricultural runoff or sewage. Methemoglobinemia risk for infants.",
-          "solution": "Ion Exchange. Investigate and control fertilizer/sewage runoff source."
+          "consequence": "Methemoglobinemia ('blue baby syndrome') in infants. Nitrate reduces oxygen-carrying capacity of blood.",
+          "solution": "Biological denitrification, Ion Exchange, or RO. Source protection: control agricultural runoff."
         }
       ]
     },
 
     {
-      "id": "chem_05", "name": "Nitrite (NO2)", "unit": "mg/L",
-      "physical_min": 0.0, "physical_max": 100.0,
+      "id": "chem_05", "name": "Fluoride (F)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 50.0,
       "standards": [
         {
             "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
-          "max_limit": 0.1,
-          "consequence": "Direct cause of methemoglobinemia. More toxic than nitrate. Indicates recent organic contamination.",
-          "solution": "Aeration, chlorination, and Ion Exchange. Investigate sewage infiltration."
+          "max_limit": 1.5,
+          "consequence": "Dental fluorosis (brown/mottled teeth) above 1.5 mg/L. Skeletal fluorosis above 4 mg/L.",
+          "solution": "Activated Alumina (Nalgonda Technique) or Bone Char filtration. Reverse Osmosis."
         },
         {
           "authority": "WHO Guidelines", "standard_date": "2022-03-21",
-          "max_limit": 3.0,
-          "consequence": "Methemoglobinemia risk. Short-term limit. WHO also sets 0.2 mg/L for long-term exposure.",
-          "solution": "Biological nitrification filter. Chlorination to oxidise nitrite to nitrate."
+          "max_limit": 1.5,
+          "consequence": "Dental fluorosis (cosmetic enamel defects) and skeletal fluorosis (bone/joint pain) at high levels. Essential trace element at low doses.",
+          "solution": "Bone char or Activated Alumina adsorption. Contact precipitation with lime and alum. RO. Climate and water consumption should be considered when setting national limits."
         }
       ]
     },
@@ -244,145 +285,81 @@
         {
             "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.01,
-          "consequence": "Group 1 Carcinogen. Causes skin/lung/bladder cancer and skin lesions.",
+          "consequence": "Group 1 Carcinogen. Causes skin, lung, bladder cancer and skin lesions.",
           "solution": "Activated Alumina adsorption or Coagulation with iron salts."
         },
         {
           "authority": "WHO Guidelines", "standard_date": "2022-03-21",
           "max_limit": 0.01,
-          "consequence": "Causes Blackfoot disease, peripheral neuropathy, multiple cancers. Chronic exposure.",
-          "solution": "Adsorption filters (Activated Alumina or Iron-based). RO for severe contamination."
+          "consequence": "Chronic exposure causes arsenicosis: skin lesions, hyperkeratosis, cancer of skin, lungs, bladder, and kidney.",
+          "solution": "Coagulation-flocculation with ferric chloride. Activated Alumina. RO. Lime softening. Source protection."
         }
       ]
     },
 
     {
-      "id": "chem_07", "name": "Fluoride (F)", "unit": "mg/L",
-      "physical_min": 0.0, "physical_max": 100.0,
-      "standards": [
-        {
-            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
-          "max_limit": 1.5,
-          "consequence": "Dental fluorosis (brown/mottled teeth) above 1.5 mg/L. Skeletal fluorosis above 4 mg/L.",
-          "solution": "Activated Alumina (Nalgonda Technique) or Bone Char filtration."
-        },
-        {
-          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
-          "max_limit": 1.5,
-          "consequence": "Dental and skeletal fluorosis. Bone deformation with chronic high exposure.",
-          "solution": "Reverse Osmosis or Activated Alumina defluoridation."
-        }
-      ]
-    },
-
-    {
-      "id": "chem_08", "name": "Copper (Cu)", "unit": "mg/L",
-      "physical_min": 0.0, "physical_max": 500.0,
-      "standards": [
-        {
-            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
-          "max_limit": 1.0,
-          "consequence": "Gastrointestinal distress (nausea/vomiting) and liver damage at high concentrations.",
-          "solution": "pH adjustment to reduce pipe corrosivity (keep pH > 7.0)."
-        },
-        {
-          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
-          "max_limit": 2.0,
-          "consequence": "Stomach upset, nausea. Liver and kidney damage with chronic high exposure.",
-          "solution": "Pipe replacement or Ion Exchange. Reduce corrosive conditions."
-        }
-      ]
-    },
-
-    {
-      "id": "chem_09", "name": "Manganese (Mn)", "unit": "mg/L",
-      "physical_min": 0.0, "physical_max": 100.0,
-      "standards": [
-        {
-            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
-          "max_limit": 0.2,
-          "consequence": "Black stains on laundry and plumbing; neurological effects with chronic exposure.",
-          "solution": "Chemical oxidation with potassium permanganate or chlorine, then filtration."
-        },
-        {
-          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
-          "max_limit": 0.08,
-          "consequence": "Neurological effects (neurotoxicity) with long-term exposure. WHO revised limit downward in 2021.",
-          "solution": "Greensand filtration or Biological Manganese Removal (BMR) filter."
-        }
-      ]
-    },
-
-    {
-      "id": "chem_10", "name": "Zinc (Zn)", "unit": "mg/L",
-      "physical_min": 0.0, "physical_max": 500.0,
-      "standards": [
-        {
-            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
-          "max_limit": 3.0,
-          "consequence": "Astringent taste and milky appearance above 3 mg/L.",
-          "solution": "Ion Exchange or flushing of galvanized pipes."
-        }
-      ]
-    },
-
-    {
-      "id": "chem_11", "name": "Total Hardness (CaCO3)", "unit": "mg/L",
-      "physical_min": 0.0, "physical_max": 10000.0,
-      "standards": [
-        {
-            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
-          "max_limit": 150,
-          "consequence": "Scale formation in pipes, boilers, and appliances; high soap consumption.",
-          "solution": "Water Softening via Lime-Soda process or Ion Exchange."
-        }
-      ]
-    },
-
-    {
-      "id": "chem_12", "name": "Cadmium (Cd)", "unit": "mg/L",
-      "physical_min": 0.0, "physical_max": 1.0,
+      "id": "chem_07", "name": "Cadmium (Cd)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 5.0,
       "standards": [
         {
             "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.003,
-          "consequence": "CRITICAL: Accumulates in kidneys causing renal tubular damage (Itai-itai disease). Carcinogen.",
+          "consequence": "Accumulates in kidneys causing renal tubular damage (Itai-itai disease). Carcinogen.",
           "solution": "Coagulation-flocculation, lime softening, or RO. Remove galvanized pipe sources."
         },
         {
           "authority": "WHO Guidelines", "standard_date": "2022-03-21",
           "max_limit": 0.003,
-          "consequence": "CRITICAL: Long half-life in kidneys. Kidney damage, bone softening, and cancer risk.",
-          "solution": "Coagulation, Ion Exchange, or RO. Identify and eliminate contamination source."
+          "consequence": "Renal tubular dysfunction and bone demineralization. Accumulates in kidney and liver. Probable carcinogen.",
+          "solution": "Coagulation with ferric salts. Lime softening. Ion Exchange. RO."
         }
       ]
     },
 
     {
-      "id": "chem_13", "name": "Chromium Total (Cr)", "unit": "mg/L",
-      "physical_min": 0.0, "physical_max": 5.0,
+      "id": "chem_08", "name": "Chromium Total (Cr)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 10.0,
       "standards": [
         {
-          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.05,
-          "consequence": "Cr(VI) is a known carcinogen. Causes skin sensitisation and lung cancer.",
-          "solution": "Coagulation at controlled pH, reduction of Cr(VI) to Cr(III), then precipitation."
+          "consequence": "Hexavalent Cr is a known carcinogen. Causes skin sensitisation, lung cancer, liver and kidney damage.",
+          "solution": "Coagulation at controlled pH, reduction of Cr(VI) to Cr(III) with ferrous sulphate, then precipitation."
         },
         {
           "authority": "WHO Guidelines", "standard_date": "2022-03-21",
           "max_limit": 0.05,
-          "consequence": "Hexavalent Cr is carcinogenic. Causes liver and kidney damage.",
-          "solution": "Coagulation with ferrous sulphate to reduce Cr(VI) to Cr(III), then flocculation."
+          "consequence": "Cr(VI) is carcinogenic; Cr(III) is essential trace element. Limit applies to total chromium.",
+          "solution": "Reduction of Cr(VI) to Cr(III) using ferrous sulfate, then coagulation. Ion Exchange. RO."
         }
       ]
     },
 
     {
-      "id": "chem_14", "name": "Mercury (Hg)", "unit": "mg/L",
-      "physical_min": 0.0, "physical_max": 0.1,
+      "id": "chem_09", "name": "Copper (Cu)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 50.0,
       "standards": [
         {
-          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 1.0,
+          "consequence": "Gastrointestinal distress (nausea/vomiting) and liver damage at high concentrations.",
+          "solution": "pH adjustment to reduce pipe corrosivity (keep pH > 7.0). Pipe replacement or Ion Exchange."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 2.0,
+          "consequence": "Acute GI disturbance (nausea, vomiting) at levels >3 mg/L. Staining of laundry and sanitary ware may occur below guideline value.",
+          "solution": "Corrosion control: pH adjustment (7.5-8.0), orthophosphate inhibitors. Replace copper pipes if leaching severe."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_10", "name": "Mercury (Hg)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 1.0,
+      "standards": [
+        {
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.001,
           "consequence": "CRITICAL: Powerful neurotoxin. Causes Minamata disease, kidney failure, neurological damage.",
           "solution": "Activated carbon adsorption, coagulation, or RO. Source elimination is critical."
@@ -390,37 +367,75 @@
         {
           "authority": "WHO Guidelines", "standard_date": "2022-03-21",
           "max_limit": 0.006,
-          "consequence": "CRITICAL: Inorganic mercury causes kidney toxicity. Organic mercury (methylmercury) is a severe neurotoxin.",
-          "solution": "Activated carbon adsorption or Ion Exchange. RO for inorganic mercury."
+          "consequence": "Inorganic mercury: renal toxicity and neurological effects. Chronic exposure causes tremor, gingivitis, psychological disturbances.",
+          "solution": "Coagulation-flocculation. Activated carbon. Lime softening. RO. Eliminate industrial sources."
         }
       ]
     },
 
     {
-      "id": "chem_15", "name": "Nickel (Ni)", "unit": "mg/L",
+      "id": "chem_11", "name": "Nickel (Ni)", "unit": "mg/L",
       "physical_min": 0.0, "physical_max": 10.0,
       "standards": [
         {
-          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
-          "max_limit": 0.07,
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 0.02,
           "consequence": "Causes allergic skin reactions; possible carcinogen with chronic exposure.",
           "solution": "Ion Exchange or RO. Check stainless steel fittings for leaching."
         },
         {
           "authority": "WHO Guidelines", "standard_date": "2022-03-21",
           "max_limit": 0.07,
-          "consequence": "Allergenic. Probable human carcinogen (Group 2A). Kidney and liver damage at high doses.",
-          "solution": "Ion Exchange, RO, or replacement of nickel-plated plumbing components."
+          "consequence": "Allergic contact dermatitis in sensitized individuals. Chronic oral exposure may affect body weight and organ function.",
+          "solution": "Ion Exchange. Lime softening. RO. Investigate source (industrial discharge or pipe materials)."
         }
       ]
     },
 
     {
-      "id": "chem_16", "name": "Barium (Ba)", "unit": "mg/L",
+      "id": "chem_12", "name": "Zinc (Zn)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 100.0,
+      "standards": [
+        {
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 3.0,
+          "consequence": "Astringent (greasy) taste and milky appearance above 3 mg/L.",
+          "solution": "Ion Exchange or flushing of galvanized pipes."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 3.0,
+          "consequence": "Aesthetic issue: astringent taste and opalescence. No formal health-based limit; essential trace element.",
+          "solution": "Pipe flushing. Replace corroded galvanized pipes. Ion Exchange if groundwater source."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_13", "name": "Manganese (Mn)", "unit": "mg/L",
       "physical_min": 0.0, "physical_max": 50.0,
       "standards": [
         {
-          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 0.2,
+          "consequence": "Black stains on laundry and plumbing; neurological effects with chronic exposure.",
+          "solution": "Chemical oxidation with potassium permanganate or chlorine, then filtration. Greensand filtration."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.08,
+          "consequence": "Neurological effects similar to Parkinson's disease at high chronic exposure. Aesthetic issues (staining, taste) at >0.1 mg/L.",
+          "solution": "Oxidation (KMnO4, Cl2, O3) followed by filtration. Greensand or pyrolusite filtration. RO."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_14", "name": "Barium (Ba)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 50.0,
+      "standards": [
+        {
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.7,
           "consequence": "Cardiovascular effects; increases blood pressure and causes kidney damage.",
           "solution": "Ion Exchange, lime softening, or RO."
@@ -428,15 +443,53 @@
         {
           "authority": "WHO Guidelines", "standard_date": "2022-03-21",
           "max_limit": 1.3,
-          "consequence": "Cardiovascular effects (raised blood pressure). WHO revised upward from 0.7 mg/L in 2022.",
-          "solution": "Ion Exchange or Reverse Osmosis."
+          "consequence": "Elevated blood pressure and cardiovascular effects. Barium sulfate (insoluble) is non-toxic; soluble barium salts are toxic.",
+          "solution": "Lime softening (converts to insoluble BaSO4). Ion Exchange. RO."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_15", "name": "Nitrite (NO2)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 50.0,
+      "standards": [
+        {
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 0.2,
+          "consequence": "Direct cause of methemoglobinemia. More toxic than nitrate. Indicates recent organic contamination.",
+          "solution": "Aeration, chlorination, and Ion Exchange. Investigate sewage infiltration. Biological nitrification filter."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 3.0,
+          "consequence": "Methemoglobinemia in infants. Nitrite is more potent than nitrate in causing blue baby syndrome. Indicates recent fecal or organic pollution.",
+          "solution": "Chlorination (oxidizes nitrite to nitrate). Investigate sewage leaks. Biological treatment."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_16", "name": "Total Hardness (CaCO3)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 10000.0,
+      "standards": [
+        {
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 150,
+          "consequence": "Scale formation in pipes, boilers, and appliances; high soap consumption.",
+          "solution": "Water Softening via Lime-Soda process or Ion Exchange."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 500,
+          "consequence": "No formal health-based limit. Aesthetic: scale deposition above 200 mg/L; increased soap usage. Hard water may reduce cardiac disease risk.",
+          "solution": "Lime-soda softening. Ion Exchange (sodium cycle). Reverse Osmosis."
         }
       ]
     },
 
     {
       "id": "chem_17", "name": "Selenium (Se)", "unit": "mg/L",
-      "physical_min": 0.0, "physical_max": 1.0,
+      "physical_min": 0.0, "physical_max": 5.0,
       "standards": [
         {
           "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
@@ -563,6 +616,581 @@
     },
 
     {
+      "id": "chem_24", "name": "Aluminum (Al)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 50.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 0.2,
+          "consequence": "Potential neurodegenerative disorders with chronic exposure.",
+          "solution": "Optimize alum dosing if used as coagulant; consider alternative coagulants."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.2,
+          "consequence": "Aesthetic/operational parameter. No confirmed health effects in drinking water. May cause precipitation and consumer complaints.",
+          "solution": "Optimize coagulation pH and dose. Use alternative coagulants (ferric salts)."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_25", "name": "Sodium (Na)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 5000.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 200,
+          "consequence": "Salty taste at high levels; concern for individuals on sodium-restricted diets.",
+          "solution": "Reverse osmosis for high-sodium groundwater."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 200,
+          "consequence": "Taste threshold ~200 mg/L. Concern for individuals with hypertension or on sodium-restricted diets. No formal health-based limit.",
+          "solution": "RO treatment. Electrodialysis."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_26", "name": "Magnesium (Mg)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 1000.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 20,
+          "consequence": "Contributes to hardness; laxative effect at very high levels.",
+          "solution": "Water softening; lime-soda or ion exchange process."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 50,
+          "consequence": "No formal health-based limit. Contributes to hardness and taste. Laxative effect above 700 mg/L (as MgSO4).",
+          "solution": "Lime softening. Ion Exchange."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_27", "name": "Hydrogen Sulphide (H2S)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 10.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 0.05,
+          "consequence": "Rotten egg odour; indicator of anaerobic conditions.",
+          "solution": "Aeration, chlorination, or activated carbon filtration."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.05,
+          "consequence": "Aesthetic issue: rotten egg odour at very low concentrations (~0.05 mg/L). Promotes corrosion.",
+          "solution": "Aeration. Chlorination (oxidizes to sulfate). Activated carbon."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_28", "name": "Antimony (Sb)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 5.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.02,
+          "consequence": "Gastrointestinal effects at high doses. Potential carcinogen.",
+          "solution": "Coagulation-flocculation. RO. Activated alumina."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_29", "name": "Uranium (U)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 10.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.03,
+          "consequence": "Renal toxicity (chemical, not radiological). Accumulates in kidney causing tubular damage.",
+          "solution": "Ion Exchange. Lime softening. RO. Coagulation."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_30", "name": "Phenols", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 5.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 0.001,
+          "consequence": "Taste and odour when chlorinated; possibly carcinogenic.",
+          "solution": "Activated carbon; ozonation."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_31", "name": "Detergents", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 10.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 0.01,
+          "consequence": "Foaming; possible carcinogen.",
+          "solution": "Activated carbon adsorption; advanced oxidation processes."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_32", "name": "Mineral oil", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 10.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 0.003,
+          "consequence": "Taste and odour; possible carcinogen.",
+          "solution": "Activated carbon; oil separation at source."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_33", "name": "Pesticides (Total)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 5.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 0.01,
+          "consequence": "Toxic and possibly carcinogenic depending on type.",
+          "solution": "Activated carbon; source protection and watershed management."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_34", "name": "PAH (Poly Aromatic Hydrocarbons)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 1.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 0.007,
+          "consequence": "Known carcinogens.",
+          "solution": "Activated carbon; source control."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.0007,
+          "consequence": "Benzo[a]pyrene is representative PAH. Carcinogenic.",
+          "solution": "Activated carbon. Source protection."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_35", "name": "TOC (Total Organic Carbon)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 100.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 5,
+          "consequence": "Indicator of organic contamination; precursor to disinfection by-products.",
+          "solution": "Enhanced coagulation; activated carbon; ozonation before chlorination."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_36", "name": "2,4,6-Trichlorophenol", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 1.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 0.02,
+          "consequence": "Chlorination by-product; carcinogenic.",
+          "solution": "Remove organic precursors before disinfection. Consider ozonation or UV."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.2,
+          "consequence": "Carcinogenic DBP. Taste/odour issues.",
+          "solution": "Reduce NOM before chlorination. Activated carbon."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_37", "name": "Benzene", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 5.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.01,
+          "consequence": "Known carcinogen (leukemia). Volatile organic compound.",
+          "solution": "Aeration (air stripping). Activated carbon. Eliminate source."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_38", "name": "Vinyl chloride", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 1.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.0003,
+          "consequence": "Carcinogenic (liver cancer). From PVC pipe degradation.",
+          "solution": "Aeration. Replace degraded PVC pipes. Activated carbon."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_39", "name": "Toluene", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 10.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.7,
+          "consequence": "Neurological effects. Taste/odour at lower levels.",
+          "solution": "Aeration (air stripping). Activated carbon."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_40", "name": "Styrene", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 5.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.02,
+          "consequence": "Neurological effects. Taste/odour concern.",
+          "solution": "Aeration. Activated carbon."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_41", "name": "Xylenes", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 10.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.5,
+          "consequence": "Neurological effects. Taste/odour concern.",
+          "solution": "Aeration. Activated carbon."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_42", "name": "Carbon tetrachloride", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 1.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.004,
+          "consequence": "Hepatotoxic and carcinogenic.",
+          "solution": "Aeration. Activated carbon."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_43", "name": "1,2-Dichloroethane", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 5.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.03,
+          "consequence": "Carcinogenic.",
+          "solution": "Aeration. Activated carbon."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_44", "name": "Trichloroethene", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 5.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.008,
+          "consequence": "Carcinogenic. Liver/kidney effects.",
+          "solution": "Aeration. Activated carbon."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_45", "name": "Tetrachloroethene", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 5.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.1,
+          "consequence": "Carcinogenic. Dry cleaning solvent.",
+          "solution": "Aeration. Activated carbon."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_46", "name": "Dichloromethane", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 5.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.02,
+          "consequence": "Carcinogenic.",
+          "solution": "Aeration. Activated carbon."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_47", "name": "Ethylbenzene", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 5.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.3,
+          "consequence": "Liver/kidney effects. Taste/odour concern.",
+          "solution": "Aeration. Activated carbon."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_48", "name": "Chloroform", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 5.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.3,
+          "consequence": "Carcinogenic THM. Liver effects.",
+          "solution": "Reduce NOM before chlorination. Activated carbon."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_49", "name": "Bromoform", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 5.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.1,
+          "consequence": "Carcinogenic THM.",
+          "solution": "Reduce NOM and bromide before chlorination."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_50", "name": "Dibromochloromethane", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 5.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.1,
+          "consequence": "Carcinogenic THM.",
+          "solution": "Reduce NOM before chlorination."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_51", "name": "Bromodichloromethane", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 5.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.06,
+          "consequence": "Carcinogenic THM.",
+          "solution": "Reduce NOM before chlorination."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_52", "name": "Chlorite", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 10.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.7,
+          "consequence": "Hemolytic effects. DBP from chlorine dioxide.",
+          "solution": "Optimize ClO2 dose. Reduce contact time."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_53", "name": "Chlorate", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 10.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.7,
+          "consequence": "Hemolytic effects. From hypochlorite degradation.",
+          "solution": "Use fresh hypochlorite. Proper storage."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_54", "name": "Bromate", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 1.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.01,
+          "consequence": "Carcinogenic. DBP from ozonation.",
+          "solution": "Reduce bromide in source. Optimize ozone dose. Use UV or H2O2."
+        }
+      ]
+    },
+
+    {
+      "id": "chem_55", "name": "Monochloramine", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 10.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 3.0,
+          "consequence": "Alternative disinfectant. Less reactive than chlorine.",
+          "solution": "Maintain appropriate residual for disinfection."
+        }
+      ]
+    },
+
+    {
+      "id": "pest_01", "name": "Atrazine", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 1.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.1,
+          "consequence": "Herbicide. Hormonal effects. Includes metabolites.",
+          "solution": "Activated carbon. Source protection."
+        }
+      ]
+    },
+
+    {
+      "id": "pest_02", "name": "Alachlor", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 1.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.02,
+          "consequence": "Carcinogenic herbicide.",
+          "solution": "Activated carbon. Source protection."
+        }
+      ]
+    },
+
+    {
+      "id": "pest_03", "name": "Lindane", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 1.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.002,
+          "consequence": "Neurological and developmental effects. Insecticide.",
+          "solution": "Activated carbon. Source protection."
+        }
+      ]
+    },
+
+    {
+      "id": "pest_04", "name": "DDT (and metabolites)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 1.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.001,
+          "consequence": "Carcinogenic. Persistent organochlorine pesticide.",
+          "solution": "Activated carbon. Source elimination (banned in most countries)."
+        }
+      ]
+    },
+
+    {
+      "id": "pest_05", "name": "2,4-D", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 1.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.03,
+          "consequence": "Kidney/liver effects. Herbicide (2,4-Dichlorophenoxyacetic acid).",
+          "solution": "Activated carbon. Source protection."
+        }
+      ]
+    },
+
+    {
+      "id": "radio_01", "name": "Radionuclides (Gross alpha)", "unit": "Bq/L",
+      "physical_min": 0.0, "physical_max": 100.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 0.1,
+          "consequence": "Increases cancer risk with chronic exposure.",
+          "solution": "Source protection; reverse osmosis; ion exchange; lime softening."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.5,
+          "consequence": "Screening level. Investigate if exceeded. Cancer risk.",
+          "solution": "RO. Ion exchange. Lime softening."
+        }
+      ]
+    },
+
+    {
+      "id": "cyano_01", "name": "Microcystins", "unit": "µg/L",
+      "physical_min": 0.0, "physical_max": 1000.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 1.0,
+          "consequence": "Hepatotoxic cyanotoxin. From cyanobacteria blooms. Total (free + cell-bound).",
+          "solution": "Source protection (reduce nutrients). Powdered activated carbon. Oxidation (ozone, permanganate)."
+        }
+      ]
+    },
+
+    {
+      "id": "cyano_02", "name": "Cylindrospermopsins", "unit": "µg/L",
+      "physical_min": 0.0, "physical_max": 100.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0.7,
+          "consequence": "Hepatotoxic cyanotoxin. From cyanobacteria. NEW in WHO 2022.",
+          "solution": "Source protection. Powdered activated carbon. Ozonation."
+        }
+      ]
+    },
+
+    {
+      "id": "cyano_03", "name": "Saxitoxins", "unit": "µg/L",
+      "physical_min": 0.0, "physical_max": 100.0,
+      "standards": [
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 3.0,
+          "consequence": "Neurotoxic cyanotoxin. Acute exposure. From cyanobacteria. NEW in WHO 2022.",
+          "solution": "Source protection. Powdered activated carbon. Oxidation."
+        }
+      ]
+    },
+
+    {
       "id": "bio_01", "name": "E. Coli", "unit": "CFU/100ml",
       "physical_min": 0.0, "physical_max": 100000.0,
       "standards": [
@@ -615,6 +1243,101 @@
           "max_limit": 500,
           "consequence": "Indicator of treatment efficiency and biological stability. Not directly pathogenic but signals system issues.",
           "solution": "Maintain adequate chlorine residual. Investigate stagnation points in distribution."
+        }
+      ]
+    },
+
+    {
+      "id": "bio_04", "name": "Giardia", "unit": "Log reduction",
+      "physical_min": 0.0, "physical_max": 10.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": "3 log reduction",
+          "consequence": "Gastrointestinal illness; resistant to chlorine disinfection.",
+          "solution": "Multi-barrier approach: source water protection, adequate treatment including filtration, disinfection, and well-maintained distribution system."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": "3-4 log reduction",
+          "consequence": "Protozoan parasite. Causes giardiasis (diarrhea). Very resistant to chlorine.",
+          "solution": "Filtration (especially slow sand). UV disinfection. Ozonation. Source protection."
+        }
+      ]
+    },
+
+    {
+      "id": "bio_05", "name": "Cryptosporidium", "unit": "Log reduction",
+      "physical_min": 0.0, "physical_max": 10.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": "3 log reduction",
+          "consequence": "Severe diarrhea; highly resistant to chlorine; dangerous for immunocompromised.",
+          "solution": "Multi-barrier approach: source water protection, filtration (especially slow sand or membrane), UV disinfection."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": "3-4 log reduction",
+          "consequence": "Extremely resistant to chlorine. Severe gastroenteritis. Life-threatening for immunocompromised.",
+          "solution": "Membrane filtration. UV disinfection (high dose). Ozonation. Chlorine ineffective."
+        }
+      ]
+    },
+
+    {
+      "id": "bio_06", "name": "Faecal Streptococcus/Enterococcus", "unit": "CFU/100ml",
+      "physical_min": 0.0, "physical_max": 10000.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 0,
+          "consequence": "Indicator of recent fecal contamination.",
+          "solution": "Disinfection; investigate contamination source; repair system integrity."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0,
+          "consequence": "Alternative fecal indicator. More resistant to disinfection than E. coli.",
+          "solution": "Disinfection. Investigate source. System repair."
+        }
+      ]
+    },
+
+    {
+      "id": "bio_07", "name": "Clostridium perfringens", "unit": "CFU/100ml",
+      "physical_min": 0.0, "physical_max": 10000.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 0,
+          "consequence": "Index of intermittent fecal contamination; spores resistant to disinfection.",
+          "solution": "Improve filtration; investigate intermittent contamination events; disinfection."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 0,
+          "consequence": "Indicator of treatment effectiveness. Spore-forming; very resistant to disinfection and environmental stress.",
+          "solution": "Improve filtration. Investigate source protection failures."
+        }
+      ]
+    },
+
+    {
+      "id": "hardness_01", "name": "Hardness (as CaCO3)", "unit": "mg/L",
+      "physical_min": 0.0, "physical_max": 10000.0,
+      "standards": [
+        {
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
+          "max_limit": 150,
+          "consequence": "Scale formation in pipes, boilers, and appliances; high soap consumption. Aesthetic concern.",
+          "solution": "Water Softening via Lime-Soda process or Ion Exchange."
+        },
+        {
+          "authority": "WHO Guidelines", "standard_date": "2022-03-21",
+          "max_limit": 500,
+          "consequence": "No formal health-based limit. Aesthetic: scale deposition above 200 mg/L. Hard water may reduce cardiac disease risk.",
+          "solution": "Lime-soda softening. Ion Exchange. RO if needed."
         }
       ]
     }
