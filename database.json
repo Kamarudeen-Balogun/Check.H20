@@ -9,7 +9,7 @@
         "isbn": "978-92-4-004506-4"
       },
       {
-        "authority": "NIS 554:2015",
+          "authority": "NAFDAC(NIS 554:2015)",
         "full_name": "Nigerian Industrial Standard for Drinking Water Quality (NSDWQ)",
         "published": "2015-01-01",
         "publisher": "Standards Organization of Nigeria (SON)",
@@ -17,7 +17,7 @@
       }
     ],
     "maintainer": "Review and update this file whenever WHO or SON publishes a new edition.",
-    "note": "physical_min / physical_max are realistic measurement bounds used for input validation only — not compliance limits. Each standard entry carries a 'standard_date' field showing when that authority issued or last revised the limit."
+    "note": "physical_min / physical_max are realistic measurement bounds used for input validation only -- not compliance limits. Each standard entry carries a 'standard_date' field showing when that authority issued or last revised the limit."
   },
   "parameters": [
 
@@ -26,7 +26,7 @@
       "physical_min": 0.0, "physical_max": 14.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 8.5, "min_limit": 6.5,
           "consequence": "Below 6.5: pipe corrosion and metallic taste. Above 8.5: scale buildup and reduced disinfection.",
           "solution": "Neutralize with Lime (low pH) or Acid Injection (high pH)."
@@ -45,7 +45,7 @@
       "physical_min": 0.0, "physical_max": 4000.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 5.0,
           "consequence": "Interferes with disinfection; aesthetically unpleasing and indicative of contamination.",
           "solution": "Coagulation, Flocculation, and Filtration."
@@ -64,7 +64,7 @@
       "physical_min": 0.0, "physical_max": 50000.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 500,
           "consequence": "Salty taste; scale formation in pipes and appliances.",
           "solution": "Reverse Osmosis (RO)."
@@ -83,7 +83,7 @@
       "physical_min": 0.0, "physical_max": 100000.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 1000,
           "consequence": "Elevated conductivity indicates high dissolved salts, corrosive potential.",
           "solution": "Reverse Osmosis or Ion Exchange."
@@ -96,7 +96,7 @@
       "physical_min": 0.0, "physical_max": 500.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 15,
           "consequence": "Aesthetically unacceptable; may indicate organic matter or metal contamination.",
           "solution": "Coagulation-flocculation-filtration or activated carbon treatment."
@@ -115,7 +115,7 @@
       "physical_min": 0.0, "physical_max": 100.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 25,
           "consequence": "High temperature accelerates bacterial growth and promotes pipe corrosion.",
           "solution": "Cool storage; prevent sunlight exposure on water pipes and tanks."
@@ -128,7 +128,7 @@
       "physical_min": 0.0, "physical_max": 20.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "min_limit": 4.0,
           "consequence": "Low DO indicates organic pollution or anaerobic conditions; promotes H2S odour.",
           "solution": "Aeration (cascade or diffuser aerators) to raise DO levels."
@@ -147,7 +147,7 @@
       "physical_min": 0.0, "physical_max": 5000.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 100,
           "consequence": "Taste impairment and corrosion of concrete infrastructure.",
           "solution": "Use PVC pipes or apply Reverse Osmosis treatment."
@@ -166,7 +166,7 @@
       "physical_min": 0.0, "physical_max": 500.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.3,
           "consequence": "Reddish-brown staining of laundry and fixtures; metallic taste.",
           "solution": "Aeration followed by sand filtration."
@@ -185,7 +185,7 @@
       "physical_min": 0.0, "physical_max": 10.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.01,
           "consequence": "CRITICAL: Neurotoxin causing irreversible brain damage, especially in children.",
           "solution": "Coagulation with alum, RO, replace lead service pipes, pH control."
@@ -204,7 +204,7 @@
       "physical_min": 0.0, "physical_max": 1000.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 50,
           "consequence": "Blue Baby Syndrome (Methemoglobinemia) in infants under 6 months.",
           "solution": "Ion Exchange or Reverse Osmosis. DO NOT boil - boiling concentrates nitrates."
@@ -223,7 +223,7 @@
       "physical_min": 0.0, "physical_max": 100.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.1,
           "consequence": "Direct cause of methemoglobinemia. More toxic than nitrate. Indicates recent organic contamination.",
           "solution": "Aeration, chlorination, and Ion Exchange. Investigate sewage infiltration."
@@ -242,7 +242,7 @@
       "physical_min": 0.0, "physical_max": 10.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.01,
           "consequence": "Group 1 Carcinogen. Causes skin/lung/bladder cancer and skin lesions.",
           "solution": "Activated Alumina adsorption or Coagulation with iron salts."
@@ -261,7 +261,7 @@
       "physical_min": 0.0, "physical_max": 100.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 1.5,
           "consequence": "Dental fluorosis (brown/mottled teeth) above 1.5 mg/L. Skeletal fluorosis above 4 mg/L.",
           "solution": "Activated Alumina (Nalgonda Technique) or Bone Char filtration."
@@ -280,7 +280,7 @@
       "physical_min": 0.0, "physical_max": 500.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 1.0,
           "consequence": "Gastrointestinal distress (nausea/vomiting) and liver damage at high concentrations.",
           "solution": "pH adjustment to reduce pipe corrosivity (keep pH > 7.0)."
@@ -299,7 +299,7 @@
       "physical_min": 0.0, "physical_max": 100.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.2,
           "consequence": "Black stains on laundry and plumbing; neurological effects with chronic exposure.",
           "solution": "Chemical oxidation with potassium permanganate or chlorine, then filtration."
@@ -318,7 +318,7 @@
       "physical_min": 0.0, "physical_max": 500.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 3.0,
           "consequence": "Astringent taste and milky appearance above 3 mg/L.",
           "solution": "Ion Exchange or flushing of galvanized pipes."
@@ -331,7 +331,7 @@
       "physical_min": 0.0, "physical_max": 10000.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 150,
           "consequence": "Scale formation in pipes, boilers, and appliances; high soap consumption.",
           "solution": "Water Softening via Lime-Soda process or Ion Exchange."
@@ -344,7 +344,7 @@
       "physical_min": 0.0, "physical_max": 1.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+            "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.003,
           "consequence": "CRITICAL: Accumulates in kidneys causing renal tubular damage (Itai-itai disease). Carcinogen.",
           "solution": "Coagulation-flocculation, lime softening, or RO. Remove galvanized pipe sources."
@@ -363,7 +363,7 @@
       "physical_min": 0.0, "physical_max": 5.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.05,
           "consequence": "Cr(VI) is a known carcinogen. Causes skin sensitisation and lung cancer.",
           "solution": "Coagulation at controlled pH, reduction of Cr(VI) to Cr(III), then precipitation."
@@ -382,7 +382,7 @@
       "physical_min": 0.0, "physical_max": 0.1,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.001,
           "consequence": "CRITICAL: Powerful neurotoxin. Causes Minamata disease, kidney failure, neurological damage.",
           "solution": "Activated carbon adsorption, coagulation, or RO. Source elimination is critical."
@@ -401,7 +401,7 @@
       "physical_min": 0.0, "physical_max": 10.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.07,
           "consequence": "Causes allergic skin reactions; possible carcinogen with chronic exposure.",
           "solution": "Ion Exchange or RO. Check stainless steel fittings for leaching."
@@ -420,7 +420,7 @@
       "physical_min": 0.0, "physical_max": 50.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.7,
           "consequence": "Cardiovascular effects; increases blood pressure and causes kidney damage.",
           "solution": "Ion Exchange, lime softening, or RO."
@@ -439,7 +439,7 @@
       "physical_min": 0.0, "physical_max": 1.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.01,
           "consequence": "Hair and nail loss (selenosis); liver and nervous system damage.",
           "solution": "RO, coagulation at low pH, or Activated Alumina adsorption."
@@ -458,7 +458,7 @@
       "physical_min": 0.0, "physical_max": 1.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.01,
           "consequence": "Inhibits cellular oxygen utilisation. Even low doses cause chronic neurological effects.",
           "solution": "Chlorination at high pH (alkaline chlorination) or activated carbon."
@@ -477,7 +477,7 @@
       "physical_min": 0.0, "physical_max": 10000.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 250,
           "consequence": "Salty taste above 250 mg/L. Corrosive to metal pipes and infrastructure.",
           "solution": "RO or electrodialysis for high-chloride groundwater."
@@ -496,7 +496,7 @@
       "physical_min": 0.0, "physical_max": 100.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 1.5,
           "consequence": "Pungent odour; indicator of sewage or agricultural contamination. Reacts with chlorine reducing disinfection.",
           "solution": "Breakpoint chlorination or biological nitrification filter. Investigate contamination source."
@@ -515,7 +515,7 @@
       "physical_min": 0.0, "physical_max": 10.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.5, "min_limit": 0.2,
           "consequence": "Below 0.2 mg/L: insufficient disinfection residual in distribution. Above 0.5 mg/L: taste/odour complaints and DBP risk.",
           "solution": "Adjust chlorine dose at treatment plant. Check contact time (min 30 min at pH < 8.0)."
@@ -548,7 +548,7 @@
       "physical_min": 0.0, "physical_max": 5.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0.001,
           "consequence": "Disinfection by-product of chlorination. Known carcinogens (chloroform, bromoform). Linked to bladder cancer.",
           "solution": "Reduce organic precursors before chlorination. Use alternative disinfectants (ozone, UV). Activate carbon post-treatment."
@@ -567,7 +567,7 @@
       "physical_min": 0.0, "physical_max": 100000.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 0,
           "consequence": "FECAL CONTAMINATION CONFIRMED: Immediate Cholera, Typhoid, and dysentery risk.",
           "solution": "Immediate Disinfection with Chlorine (boil water advisory). Investigate source of contamination."
@@ -586,7 +586,7 @@
       "physical_min": 0.0, "physical_max": 100000.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 10,
           "consequence": "Indicates environmental or fecal contamination of the distribution system.",
           "solution": "Check system integrity for pipe cracks. Shock-chlorinate distribution system."
@@ -605,7 +605,7 @@
       "physical_min": 0.0, "physical_max": 100000.0,
       "standards": [
         {
-          "authority": "NIS 554:2015", "standard_date": "2015-01-01",
+          "authority": "NAFDAC(NIS 554:2015)", "standard_date": "2015-01-01",
           "max_limit": 100,
           "consequence": "High HPC indicates general microbial activity and possible biofilm growth in distribution pipes.",
           "solution": "Improve chlorine residual in distribution. Clean and flush pipe network."
