@@ -122,7 +122,7 @@
       gap: 8px;
       margin-bottom: 5px;
     }
-    select, input[type="number"], input[type="text"] {
+    input[type="number"], input[type="text"] {
       width: 100%;
       padding: 9px 11px;
       border: 1px solid var(--border);
@@ -132,7 +132,7 @@
       background: #fff;
       transition: border-color 0.15s, box-shadow 0.15s;
     }
-    select:focus, input:focus {
+    input:focus {
       outline: none;
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(26,111,181,0.12);
@@ -145,6 +145,101 @@
       padding: 2px 7px;
       font-weight: 700;
       white-space: nowrap;
+    }
+    .field-hint {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .combo {
+      position: relative;
+    }
+    .combo-toggle {
+      width: 100%;
+      padding: 9px 11px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      font-size: 0.9rem;
+      color: var(--text);
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .combo-toggle:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(26,111,181,0.12);
+    }
+    .combo-label {
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .combo-caret {
+      color: var(--muted);
+      font-size: 0.75rem;
+      flex-shrink: 0;
+      transition: transform 0.15s;
+    }
+    .combo.open .combo-caret {
+      transform: rotate(180deg);
+    }
+    .combo-panel {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      z-index: 30;
+      padding: 8px;
+    }
+    .combo.open .combo-panel {
+      display: block;
+    }
+    .combo-options {
+      max-height: 210px;
+      overflow-y: auto;
+      margin-top: 8px;
+      border: 1px solid #EEF2F7;
+      border-radius: 7px;
+      background: #FAFCFF;
+    }
+    .combo-option {
+      width: 100%;
+      border: none;
+      background: transparent;
+      text-align: left;
+      padding: 9px 10px;
+      font-size: 0.86rem;
+      color: var(--text);
+      cursor: pointer;
+      border-bottom: 1px solid #EEF2F7;
+    }
+    .combo-option:last-child {
+      border-bottom: none;
+    }
+    .combo-option:hover {
+      background: #EFF6FF;
+    }
+    .combo-option.is-selected {
+      background: #DBEAFE;
+      color: #0B4A8F;
+      font-weight: 600;
+    }
+    .combo-empty {
+      padding: 10px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
     }
 
     /* ── Batch List ───────────────────────────────────────────── */
@@ -443,12 +538,20 @@
 
         <div class="form-group">
           <div class="label-row">
-            <label for="param-select" style="margin:0">Parameter</label>
+            <label for="param-search" style="margin:0">Parameter</label>
             <span class="unit-badge" id="unit-display">—</span>
           </div>
-          <select id="param-select">
-            <option value="">— Select a parameter —</option>
-          </select>
+          <div class="combo" id="param-combo">
+            <button type="button" class="combo-toggle" id="param-toggle" aria-expanded="false">
+              <span class="combo-label" id="param-selected-label">— Select a parameter —</span>
+              <span class="combo-caret">▼</span>
+            </button>
+            <div class="combo-panel" id="param-panel">
+              <input type="text" id="param-search" placeholder="Search parameter (e.g. lead, pH, nitrate)" autocomplete="off" />
+              <div class="combo-options" id="param-options"></div>
+            </div>
+          </div>
+          <div class="field-hint">Click the dropdown and type to filter suggestions instantly.</div>
         </div>
 
         <div class="form-group">
@@ -516,7 +619,12 @@
   const STORAGE_RAN      = 'wq_analysisRan';
 
   // ── DOM refs ─────────────────────────────────────────────────
-  const paramSelect  = document.getElementById('param-select');
+  const paramCombo   = document.getElementById('param-combo');
+  const paramToggle  = document.getElementById('param-toggle');
+  const paramPanel   = document.getElementById('param-panel');
+  const paramOptions = document.getElementById('param-options');
+  const paramSearch  = document.getElementById('param-search');
+  const paramLabel   = document.getElementById('param-selected-label');
   const valueInput   = document.getElementById('value-input');
   const unitDisplay  = document.getElementById('unit-display');
   const batchList    = document.getElementById('batch-list');
@@ -528,6 +636,7 @@
   const btnClear     = document.getElementById('btn-clear');
   const resultsArea  = document.getElementById('results-area');
   const dbVersion    = document.getElementById('db-version');
+  let selectedParamName = '';
 
   // ── Load parameters on boot ───────────────────────────────────
   async function loadParameters() {
@@ -540,17 +649,56 @@
       } else {
         dbVersion.style.display = 'none';
       }
-      parameters.forEach(p => {
-        const opt = document.createElement('option');
-        opt.value = p.name;
-        opt.textContent = p.name;
-        paramSelect.appendChild(opt);
-      });
+      renderParameterOptions('');
       // After parameters load, restore batch and results from localStorage
       restoreFromStorage();
     } catch {
       dbVersion.textContent = 'Could not load standards — is Flask running?';
     }
+  }
+
+  function renderParameterOptions(searchText) {
+    const query = (searchText || '').trim().toLowerCase();
+    const filtered = query
+      ? parameters.filter(p => p.name.toLowerCase().includes(query))
+      : parameters;
+
+    if (!filtered.length) {
+      paramOptions.innerHTML = '<div class="combo-empty">No matching parameters.</div>';
+      return;
+    }
+
+    paramOptions.innerHTML = filtered.map(p => {
+      const selectedClass = p.name === selectedParamName ? 'is-selected' : '';
+      return `<button type="button" class="combo-option ${selectedClass}" data-name="${p.name}">${p.name}</button>`;
+    }).join('');
+
+    paramOptions.querySelectorAll('.combo-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setSelectedParameter(btn.dataset.name || '');
+        closeParamDropdown();
+        clearInputErrors();
+      });
+    });
+  }
+
+  function setSelectedParameter(name) {
+    selectedParamName = name || '';
+    paramLabel.textContent = selectedParamName || '— Select a parameter —';
+    const p = parameters.find(x => x.name === selectedParamName);
+    unitDisplay.textContent = p ? p.unit : '—';
+  }
+
+  function openParamDropdown() {
+    paramCombo.classList.add('open');
+    paramToggle.setAttribute('aria-expanded', 'true');
+    renderParameterOptions(paramSearch.value);
+    paramSearch.focus();
+  }
+
+  function closeParamDropdown() {
+    paramCombo.classList.remove('open');
+    paramToggle.setAttribute('aria-expanded', 'false');
   }
 
   // ── Local Storage Functions ───────────────────────────────────
@@ -610,10 +758,28 @@
   }
 
   // ── Unit badge update ─────────────────────────────────────────
-  paramSelect.addEventListener('change', () => {
-    const p = parameters.find(p => p.name === paramSelect.value);
-    unitDisplay.textContent = p ? p.unit : '—';
+  paramToggle.addEventListener('click', () => {
+    if (paramCombo.classList.contains('open')) {
+      closeParamDropdown();
+    } else {
+      openParamDropdown();
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!paramCombo.contains(e.target)) closeParamDropdown();
+  });
+
+  paramSearch.addEventListener('input', () => {
+    renderParameterOptions(paramSearch.value);
     clearInputErrors();
+  });
+
+  paramSearch.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeParamDropdown();
+      paramToggle.focus();
+    }
   });
 
   // ── Add to batch ──────────────────────────────────────────────
@@ -622,7 +788,7 @@
 
   function addToBatch() {
     clearInputErrors();
-    const name = paramSelect.value;
+    const name = selectedParamName;
     const raw  = valueInput.value.trim();
 
     if (!name) { showInputError('Please select a parameter.'); return; }
@@ -636,9 +802,11 @@
     batch.push({ name, value: parseFloat(raw), unit: param.unit });
 
     // Reset form
-    paramSelect.value       = '';
+    paramSearch.value       = '';
+    setSelectedParameter('');
+    renderParameterOptions('');
+    closeParamDropdown();
     valueInput.value        = '';
-    unitDisplay.textContent = '—';
 
     renderBatch();
     saveBatch();
