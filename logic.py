@@ -104,6 +104,21 @@ def sanitize(text):
     return text.encode('latin-1', 'replace').decode('latin-1')
 
 
+def coerce_numeric(value):
+    """
+    Return a float when value is numeric-like, otherwise None.
+
+    This prevents runtime type errors when standards contain text-based limits
+    (e.g., "Unobjectionable") that are for descriptive display only.
+    """
+    try:
+        if value is None:
+            return None
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
 def safe_output_path(directory, filename):
     """
     Return an absolute path for a PDF output file.
@@ -214,18 +229,20 @@ def run_analysis(batch_data):
             standard_date = std.get('standard_date', 'date unknown')
             limit_max     = std.get('max_limit')
             limit_min     = std.get('min_limit')
+            limit_max_num = coerce_numeric(limit_max)
+            limit_min_num = coerce_numeric(limit_min)
 
             is_unsafe     = False
             violation_txt = ""
 
-            if limit_max is not None and val > limit_max:
+            if limit_max_num is not None and val > limit_max_num:
                 is_unsafe     = True
-                violation_txt = f"> {limit_max}"
+                violation_txt = f"> {limit_max_num}"
 
             # FIX: use `is not None` — catches limit_min == 0 correctly
-            if limit_min is not None and val < limit_min:
+            if limit_min_num is not None and val < limit_min_num:
                 is_unsafe     = True
-                violation_txt = f"< {limit_min}"
+                violation_txt = f"< {limit_min_num}"
 
             # Build limit display string — FIX: plain hyphen avoids em/en-dash encoding crash
             if limit_min is not None and limit_max is not None:
